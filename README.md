@@ -1,30 +1,33 @@
-# cordova-icon-gm
+# cordova-splash-gm
 
-Automatic icon resizing for Cordova. Add `icon.png` to the root folder of your Cordova project and use cordova-icon-gm to automatically resize, copy and configure the icon for all current Android and iOS devices.
+Automatic splash screen resizing for Cordova. Add `splash.png` to the root folder of your Cordova project and use cordova-splash-gm to automatically resize, crop, copy and configure the splash screen for all current Android and iOS devices.
+
+### Add Ionic opion 
+cordova-splash --ionic
 
 ### Manual usage
-1. `npm install -g cordova-icon-gm`
-2. Place `icon.png` to the root folder of your Cordova project
-3. Run `cordova-icon`.
+1. `npm install -g cordova-splash-gm`
+2. Place `splash.png` to the root folder of your Cordova project
+3. Run `cordova-splash-gm`.
 
 ### Automated usage
-1. `npm install cordova-icon-gm --save-dev`
+1. `npm install cordova-splash-gm --save-dev`
 
-2. Create `my-icon-hook.js`
+2. Create `my-splash-hook.js`
     ```javascript
-    var icon = require('cordova-icon-gm');
+    var splash = require('cordova-splash-gm');
     
     module.exports = function() {
-      return icon.generate();
+      return splash.generate();
     };
     ```
 
 3. Add hook to `config.xml`
     ```xml
-    <hook src="my-icon-hook.js" type="after_platform_add" />
+    <hook src="my-splash-hook.js" type="after_platform_add" />
     ```
 
-That's it. Now every time you `cordova add platform`, the icons will be auto generated.
+That's it. Now every time you `cordova add platform`, the splash screens will be auto generated.
 
 ### Requirements
 - GraphicsMagick
@@ -32,7 +35,7 @@ That's it. Now every time you `cordova add platform`, the icons will be auto gen
 - Cordova's config.xml file must exist in the root folder
 
 ### Credits
-All credit goes to [Alex Disler](https://github.com/AlexDisler) for his [cordova-icon](https://github.com/AlexDisler/cordova-icon) module, from which this project is forked from. The node [imagemagick](https://www.npmjs.org/package/imagemagick) module is deprecated in favor of [gm](https://www.npmjs.org/package/gm).
+All credit goes to [Alex Disler](https://github.com/AlexDisler) for his [cordova-icon](https://github.com/AlexDisler/cordova-icon) module, from which this project is forked from. The main changes are node's [imagemagick](https://www.npmjs.org/package/imagemagick) module is deprecated in favor of [gm](https://www.npmjs.org/package/gm) and the plugin can be used as a module in hooks.
 
 ### License
 

@@ -4,7 +4,8 @@ Automatic splash screen resizing for Cordova. Add `splash.png` to the root folde
 
 ### Add Ionic option 
 This option will store the splash screens into resource folder instead of storing into platform folder directly.
-    cordova-splash --ionic
+
+cordova-splash --ionic
 
 ### Manual usage
 1. `npm install -g cordova-splash-gm`

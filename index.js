@@ -1,16 +1,12 @@
 var fs     = require('fs');
-var crypto = require('crypto');
 var xml2js = require('xml2js');
 var gm     = require('gm');
 var colors = require('colors');
 var _      = require('underscore');
 var Q      = require('q');
 var ionic  = false;
-
-var hashes = [];
-
 /**
- * Check which platforms are added to the project and return their splashscreen names and sized
+ * Check which platforms are added to the project and return their icon names and sized
  *
  * @param  {String} projectName
  * @return {Promise} resolves with an array of platforms
@@ -22,38 +18,38 @@ var getPlatforms = function (projectName) {
         name : 'ios',
         // TODO: use async fs.exists
         isAdded : fs.existsSync('platforms/ios'),
-        splashPaths : 'platforms/ios/' + projectName + '/Resources/splash/',
-        splashes : [
-            { name : 'Default~iphone.png',            size : { w: 320,  h: 480  }  },
-            { name : 'Default@2x~iphone.png',         size : { w: 640,  h: 960  }  },
-            { name : 'Default-Portrait~ipad.png',     size : { w: 768,  h: 1024 }  },
-            { name : 'Default-Portrait@2x~ipad.png',  size : { w: 1536, h: 2048 }  },
-            { name : 'Default-Landscape~ipad.png',    size : { w: 1024, h: 768  }  },
-            { name : 'Default-Landscape@2x~ipad.png', size : { w: 2048, h: 1536 }  },
-            { name : 'Default-568h@2x~iphone.png',    size : { w: 640,  h: 1136 }  },
-            { name : 'Default-667h.png',              size : { w: 750,  h: 1334 }  },
-            { name : 'Default-736h.png',              size : { w: 1242, h: 2208 }  },
-            { name : 'Default-Landscape-736h.png',    size : { w: 2208, h: 1242 }  }
+        iconsPath : 'platforms/ios/' + projectName + '/Resources/icons/',
+        icons : [
+            { name : 'icon-40.png',       size : 40  },
+            { name : 'icon-40@2x.png',    size : 80  },
+            { name : 'icon-50.png',       size : 50  },
+            { name : 'icon-50@2x.png',    size : 100 },
+            { name : 'icon-60.png',       size : 60  },
+            { name : 'icon-60@2x.png',    size : 120 },
+            { name : 'icon-60@3x.png',    size : 180 },
+            { name : 'icon-72.png',       size : 72  },
+            { name : 'icon-72@2x.png',    size : 144 },
+            { name : 'icon-76.png',       size : 76  },
+            { name : 'icon-76@2x.png',    size : 152 },
+            { name : 'icon-small.png',    size : 29  },
+            { name : 'icon-small@2x.png', size : 58  },
+            { name : 'icon.png',          size : 57  },
+            { name : 'icon@2x.png',       size : 114 },
         ]
     });
     platforms.push({
         name : 'android',
-        splashPaths : 'platforms/android/res/',
-        ionicPaths : 'resources/android/splash/',
-        isAdded : fs.existsSync('platforms/android'),
-        splashes : [
-            { name : 'drawable-land-hdpi/screen.png'   ,size : { w: 800, h: 480  } ,iname : 'drawable-land-hdpi-screen.png'   },
-            { name : 'drawable-land-ldpi/screen.png'   ,size : { w: 320, h: 200  } ,iname : 'drawable-land-ldpi-screen.png'   },
-            { name : 'drawable-land-mdpi/screen.png'   ,size : { w: 480, h: 320  } ,iname : 'drawable-land-mdpi-screen.png'   },
-            { name : 'drawable-land-xhdpi/screen.png'  ,size : { w: 1280, h: 720 } ,iname : 'drawable-land-xhdpi-screen.png'  },
-            { name : 'drawable-port-hdpi/screen.png'   ,size : { w: 480, h: 800  } ,iname : 'drawable-port-hdpi-screen.png'   },
-            { name : 'drawable-port-ldpi/screen.png'   ,size : { w: 200, h: 320  } ,iname : 'drawable-port-ldpi-screen.png'   },
-            { name : 'drawable-port-mdpi/screen.png'   ,size : { w: 320, h: 480  } ,iname : 'drawable-port-mdpi-screen.png'   },
-            { name : 'drawable-port-xhdpi/screen.png'  ,size : { w: 720, h: 1280 } ,iname : 'drawable-port-xhdpi-screen.png'  },
-            { name : 'drawable-land-xxhdpi/screen.png' ,size : { w: 1600, h: 960 } ,iname : 'drawable-land-xxhdpi-screen.png' },
-            { name : 'drawable-land-xxxhdpi/screen.png',size : { w: 1920, h: 1280} ,iname : 'drawable-land-xxxhdpi-screen.png'},
-            { name : 'drawable-port-xxhdpi/screen.png' ,size : { w: 960 , h: 1600} ,iname : 'drawable-port-xxhdpi-screen.png' },
-            { name : 'drawable-port-xxxhdpi/screen.png',size : { w: 1280, h: 1920} ,iname : 'drawable-port-xxxhdpi-screen.png'}			
+        iconsPath : 'platforms/android/res/',
+        ionicPath : 'resources/android/icon/',
+		isAdded : fs.existsSync('platforms/android'),
+        icons : [
+            { name : 'drawable/icon.png',         size : 96  ,iname:'drawable-icon.png'},
+            { name : 'drawable-hdpi/icon.png',    size : 72  ,iname:'drawable-hdpi-icon.png'},
+            { name : 'drawable-ldpi/icon.png',    size : 36  ,iname:'drawable-ldpi-icon.png'},
+            { name : 'drawable-mdpi/icon.png',    size : 48  ,iname:'drawable-mdpi-icon.png'},
+            { name : 'drawable-xhdpi/icon.png',   size : 96  ,iname:'drawable-xhdpi-icon.png'},
+            { name : 'drawable-xxhdpi/icon.png',  size : 144 ,iname:'drawable-xxhdpi-icon.png'},
+            { name : 'drawable-xxxhdpi/icon.png', size : 192 ,iname:'drawable-xxxhdpi-icon.png'}
         ]
     });
     // TODO: add all platforms
@@ -63,12 +59,12 @@ var getPlatforms = function (projectName) {
 
 
 /**
- * @var {Object} settings - names of the confix file and of the splashscreen image
+ * @var {Object} settings - names of the confix file and of the icon image
  * TODO: add option to get these values as CLI params
  */
 var settings = {};
 settings.CONFIG_FILE = 'config.xml';
-settings.SPLASH_FILE   = 'splash.png';
+settings.ICON_FILE   = 'icon.png';
 
 /**
  * @var {Object} console utils
@@ -94,115 +90,73 @@ display.header = function (str) {
  * @return {Promise} resolves to a string - the project's name
  */
 var getProjectName = function () {
-  var deferred = Q.defer();
-  var parser = new xml2js.Parser();
-  data = fs.readFile(settings.CONFIG_FILE, function (err, data) {
-    if (err) {
-      deferred.reject(err);
-    }
-    parser.parseString(data, function (err, result) {
-      if (err) {
-        deferred.reject(err);
-      }
-      var projectName = result.widget.name[0];
-      deferred.resolve(projectName);
-    });
-  });
-  return deferred.promise;
-};
-
-/**
- * Calculates MD5 hash of source file.
- *
- * @return {Promise}
- */
-var calculateHash = function(filepath) {
-  var deferred = Q.defer();
-  var file     = fs.createReadStream(filepath);
-  var hash     = crypto.createHash('sha1');
-
-  hash.setEncoding('hex');
-
-  // read all file and pipe it (write it) to the hash object
-  file.pipe(hash);
-  file.on('end', function() {
-    hash.end();
-    deferred.resolve(hash.read());
-  });
-
-  return deferred.promise;
-};
-
-/**
- * Resizes and creates a new splashscreen in the platform's folder.
- *
- * @param  {Object} platform
- * @param  {Object} splash
- * @return {Promise}
- */
-var generateSplash= function (platform, splash) {
-  var deferred = Q.defer();
-  var constraint;
-  var height = splash.size.h;
-  var width = splash.size.w;
-  //var file = platform.splashPaths + splash.name;
-  var file ="";
-  if (ionic){
-    file = platform.ionicPaths + splash.iname;
-    }else{
-    file = platform.iconsPaths + splash.name;
-    }
-  
-  
-  var max;
-
-  // calculate orientation constraint
-  if (height > width) {
-    constraint = 'height';
-    max = height;
-  } else {
-    constraint = 'width';
-    max = width;
-  }
-
-  calculateHash(file).then(function(hash) {
-    hashes.push(hash);
-    // output resized file
-    gm(settings.SPLASH_FILE)
-    .resize(max, max)
-    .gravity('center')
-    .crop(width, height, (max-width)/2, (max-height)/2)
-    .write(file, function(err) {
-      if (err) {
-        deferred.reject(err);
-      } else {
-        deferred.resolve();
-        if (ionic){
-            display.success(splash.iname + '... created');
-        }else{
-            display.success(splash.name + ' created');
-        }
-        //display.success(splash.name + ' created');
-      }
-    });
-  });
-
-  return deferred.promise;
-};
-
-/**
- * Generates splash screens based on the platform object
- *
- * @param  {Object} platform
- * @return {Promise}
- */
-var generateSplashForPlatform = function (platform) {
     var deferred = Q.defer();
-    display.header('Generating splash screens for ' + platform.name);
+    var parser = new xml2js.Parser();
+    data = fs.readFile(settings.CONFIG_FILE, function (err, data) {
+        if (err) {
+            deferred.reject(err);
+        }
+        parser.parseString(data, function (err, result) {
+            if (err) {
+                deferred.reject(err);
+            }
+            var projectName = result.widget.name[0];
+            deferred.resolve(projectName);
+        });
+    });
+    return deferred.promise;
+};
+
+/**
+ * Resizes and creates a new icon in the platform's folder.
+ *
+ * @param  {Object} platform
+ * @param  {Object} icon
+ * @return {Promise}
+ */
+var generateIcon = function (platform, icon) {
+    var deferred = Q.defer();
+    
+    //var file = platform.iconsPath + icon.name;
+    var file ="";
+    if (ionic){
+        file = platform.ionicPath + icon.iname;
+        //console.log(file);
+    }else{
+        file = platform.iconsPath + icon.name;
+    }
+    
+
+    gm(settings.ICON_FILE)
+      .resize(icon.size, icon.size)
+      .write(file, function(err) {
+        if (err) {
+          deferred.reject(err);
+        } else {
+          deferred.resolve();
+          if (ionic){
+            display.success(icon.iname + ' created');
+          }else{
+            display.success(icon.name + ' created');
+          }
+        }
+      });
+    return deferred.promise;
+};
+
+/**
+ * Generates icons based on the platform object
+ *
+ * @param  {Object} platform
+ * @return {Promise}
+ */
+var generateIconsForPlatform = function (platform) {
+    var deferred = Q.defer();
+    display.header('Generating Icons for ' + platform.name);
     var all = [];
-    var splashes = platform.splashes;
-    splashes.forEach(function (splash) {
-        all.push(generateSplash(platform, splash));
+    var icons = platform.icons;
+    icons.forEach(function (icon) {
+        all.push(generateIcon(platform, icon));
     });
     Q.all(all).then(function () {
         deferred.resolve();
@@ -213,18 +167,18 @@ var generateSplashForPlatform = function (platform) {
 };
 
 /**
- * Goes over all the platforms and triggers splashscreen generation
- *
+ * Goes over all the platforms and triggers icon generation
+ * 
  * @param  {Array} platforms
  * @return {Promise}
  */
-var generateSplashes = function (platforms) {
+var generateIcons = function (platforms) {
     var deferred = Q.defer();
     var sequence = Q();
     var all = [];
     _(platforms).where({ isAdded : true }).forEach(function (platform) {
         sequence = sequence.then(function () {
-            return generateSplashForPlatform(platform);
+            return generateIconsForPlatform(platform);
         });
         all.push(sequence);
     });
@@ -255,18 +209,18 @@ var atLeastOnePlatformFound = function () {
 };
 
 /**
- * Checks if a valid splashscreen file exists
+ * Checks if a valid icon file exists
  *
  * @return {Promise} resolves if exists, rejects otherwise
  */
-var validSplashExists = function () {
+var validIconExists = function () {
     var deferred = Q.defer();
-    fs.exists(settings.SPLASH_FILE, function (exists) {
+    fs.exists(settings.ICON_FILE, function (exists) {
         if (exists) {
-            display.success(settings.SPLASH_FILE + ' exists');
+            display.success(settings.ICON_FILE + ' exists');
             deferred.resolve();
         } else {
-            display.error(settings.SPLASH_FILE + ' does not exist in the root folder');
+            display.error(settings.ICON_FILE + ' does not exist in the root folder');
             deferred.reject();
         }
     });
@@ -292,7 +246,7 @@ var configFileExists = function () {
     return deferred.promise;
 };
 
-display.header('Checking Project & Splashscreens');
+display.header('Checking Project & Icon');
 
 var run = function(ionicParam) {
   if (ionicParam!==undefined){
@@ -301,20 +255,20 @@ var run = function(ionicParam) {
 	}else{
 	console.log('Ionic Flag is Off .... ');
 	}
-  
+	
   return atLeastOnePlatformFound()
-      .then(validSplashExists)
-      .then(configFileExists)
-      .then(getProjectName)
-      .then(getPlatforms)
-      .then(generateSplashes)
-      .catch(function (err) {
-          if (err) {
-              console.log(err);
-          }
-      }).then(function () {
-          // console.log(hashes);
-      });
+    .then(validIconExists)
+    .then(configFileExists)
+    .then(getProjectName)
+    .then(getPlatforms)
+    .then(generateIcons)
+    .catch(function (err) {
+        if (err) {
+            console.log(err);
+        }
+    }).then(function () {
+        console.log('');
+    });
 };
 
 module.exports = {

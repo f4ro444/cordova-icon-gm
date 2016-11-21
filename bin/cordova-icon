@@ -1,2 +1,11 @@
 #!/usr/bin/env node
-require('./../index.js').generate();
+
+var argv = require('yargs').argv;
+var ionic = argv.ionic;
+//console.log(ionic);
+// print process.argv
+//process.argv.forEach(function (val, index, array) {
+//  console.log(index + ': ' + val);
+//});
+
+require('./../index.js').generate(ionic);
